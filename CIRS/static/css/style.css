@@ -1,0 +1,442 @@
+/* =======================
+   Global Styles
+======================= */
+body {
+    margin: 0;
+    font-family: 'Poppins', Arial, sans-serif;
+    color: #222;
+    background-color: #f5f5f5;
+}
+
+.wrap {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* =======================
+   Header / Navbar
+======================= */
+.topbar {
+    background-color: rgba(0, 123, 255, 0.95);
+    padding: 12px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.topbar .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar .brand {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #fff;
+    text-decoration: none;
+}
+
+.topbar .nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.topbar .nav a:hover {
+    color: #ffcc00;
+}
+
+.btn-logout {
+    background: #ff4444;
+    padding: 6px 12px;
+    border-radius: 6px;
+    color: #fff !important;
+}
+
+/* =======================
+   Hero Section
+======================= */
+.hero {
+    background: url('../images/New-Delhi.jpg') no-repeat center center;
+    background-size: cover;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1;
+}
+
+.hero-overlay {
+    position: relative;
+    z-index: 2;
+    padding: 40px 20px;
+    border-radius: 12px;
+}
+
+.hero h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    max-width: 800px;
+    margin: 0 auto 20px auto;
+}
+
+.btn {
+    display: inline-block;
+    background: #007bff;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.btn:hover {
+    background: #0056b3;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.hero-stats .stat span {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #ffcc00;
+}
+
+.hero-stats .stat p {
+    font-size: 1rem;
+    color: #fff;
+    margin-top: 6px;
+}
+
+/* =======================
+   Procedure Section
+======================= */
+.procedure {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.procedure h2 {
+    font-size: 2rem;
+    margin-bottom: 40px;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+}
+
+.step-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    text-align: left;
+}
+
+.step-card h3 {
+    color: #007bff;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.step-card p {
+    color: #444;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* =======================
+   Footer Section
+======================= */
+.footer {
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    padding: 40px 10%;
+    font-size: 0.95rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.footer-section h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #ffcc00;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+    color: #007bff;
+}
+
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 12px;
+    font-size: 0.85rem;
+    color: #ccc;
+}
+
+/* =======================
+   Admin Dashboard Styles
+======================= */
+.card {
+    background: #fff;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.filters select,
+.filters input,
+.filters button {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+}
+
+.filters button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.filters button:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th,
+table td {
+    padding: 12px 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+table th {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: 600;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.btn-small {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.btn-small:hover {
+    background-color: #218838;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* =======================
+   Responsive Styles
+======================= */
+@media (max-width: 1024px) {
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    .filters {
+        flex-direction: column;
+        gap: 10px;
+    }
+    table th, table td {
+        font-size: 0.85rem;
+        padding: 8px 6px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    .hero p {
+        font-size: 1rem;
+    }
+    .steps-grid {
+        grid-template-columns: 1fr;
+    }
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* =======================
+   Feedback Pages Styles
+======================= */
+.feedback-card {
+    background: #fff;
+    padding: 25px;
+    margin: 20px auto;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    max-width: 900px;
+}
+
+.feedback-card h2 {
+    color: #007bff;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.feedback-card form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.feedback-card form textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.feedback-card form button.btn {
+    display: inline-block;
+    background: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.feedback-card form button.btn:hover {
+    background: #218838;
+}
+
+.feedback-card table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.feedback-card table th,
+.feedback-card table td {
+    padding: 12px 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.feedback-card table th {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: 600;
+}
+
+.feedback-card table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.feedback-card p {
+    text-align: center;
+    font-size: 1rem;
+    color: #555;
+    margin-top: 20px;
+}
+

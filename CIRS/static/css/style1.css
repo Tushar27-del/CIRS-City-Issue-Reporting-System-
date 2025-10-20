@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #c9d6ff, #e2e2e2);
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 40px 50px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    max-width: 90%;
+    text-align: center;
+    position: relative;
+}
+
+.container h1 {
+    margin-bottom: 25px;
+    color: #512da8;
+    font-weight: 700;
+    font-size: 28px;
+}
+
+.container input, .container select {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.container input:focus, .container select:focus {
+    border-color: #512da8;
+    box-shadow: 0 0 8px rgba(81, 45, 168, 0.3);
+}
+
+.container button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #5c6bc0, #512da8);
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.container button:hover {
+    background: linear-gradient(90deg, #512da8, #5c6bc0);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(81, 45, 168, 0.3);
+}
+
+.container p {
+    margin-top: 15px;
+    font-size: 13px;
+    color: #555;
+}
+
+.container p a {
+    color: #512da8;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.container p a:hover {
+    text-decoration: underline;
+}
+
+/* Admin Department dropdown */
+#admin_department_container {
+    margin-top: 10px;
+    transition: all 0.3s;
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 480px) {
+    .container {
+        padding: 30px 20px;
+    }
+    .container h1 {
+        font-size: 24px;
+    }
+}

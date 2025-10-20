@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register | City Issue Reporting</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style1.css') }}">
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const roleSelect = document.getElementById('role_select');
+    const adminDeptContainer = document.getElementById('admin_department_container');
+
+    // Hide admin department initially
+    adminDeptContainer.style.display = 'none';
+
+    // Listen for role changes
+    roleSelect.addEventListener('change', () => {
+        if (roleSelect.value === 'admin') {
+            adminDeptContainer.style.display = 'block';
+        } else {
+            adminDeptContainer.style.display = 'none';
+        }
+    });
+});
+</script>
+</head>
+<body>
+
+<div class="container">
+    <form method="POST" action="{{ url_for('register') }}">
+        <h1>Register</h1>
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+
+        <select name="role" id="role_select" required>
+            <option value="">Select Role</option>
+            <option value="citizen">Citizen</option>
+            <option value="admin">Admin</option>
+        </select>
+
+        <div id="admin_department_container">
+            <select name="admin_department">
+                <option value="">Select Admin Department</option>
+                <option value="General Admin">General Admin</option>
+                <option value="Water Supply">Water Supply</option>
+                <option value="Road Maintenance">Road Maintenance</option>
+                <option value="Street Lights">Street Lights</option>
+                <option value="Garbage & Sanitation">Garbage & Sanitation</option>
+                <option value="Building & Construction">Building & Construction</option>
+                <option value="Public Health">Public Health</option>
+                <option value="Parks & Gardens">Parks & Gardens</option>
+                <option value="Drainage">Drainage</option>
+                <option value="Electricity">Electricity</option>
+                <option value="Environmental">Environmental</option>
+            </select>
+        </div>
+
+        <button type="submit">Register</button>
+        <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+    </form>
+</div>
+
+</body>
+</html>

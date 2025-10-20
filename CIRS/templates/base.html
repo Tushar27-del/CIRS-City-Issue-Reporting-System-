@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}CIRS - City Issue Reporting System{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+
+</head>
+<body>
+
+<!-- ===================== Header / Navbar ===================== -->
+<header class="topbar">
+    <div class="wrap">
+        <a class="brand" href="{{ url_for('home') }}">CIRS</a>
+        <nav class="nav">
+            {% if 'user_id' in session %}
+                {% if session.role == 'admin' %}
+                    <a href="{{ url_for('dashboard_admin') }}">Admin Dashboard</a>
+                    <a href="{{ url_for('admin_feedback') }}">Feedback</a>
+                {% else %}
+                    <a href="{{ url_for('profile') }}">Profile</a>
+                    <a href="{{ url_for('dashboard_user') }}">My Complaints</a>
+                    <a href="{{ url_for('complaint_new') }}">Report Issue</a>
+                {% endif %}
+                <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">User Login</a>
+                <a href="{{ url_for('login_admin') }}">Admin Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
+
+<!-- ===================== Hero Section ===================== -->
+<section class="hero">
+  <div class="hero-overlay">
+    <h1>Make Your City Better</h1>
+    <p>Start with your neighbourhood to bring the change. Improve your city and its quality of life.</p>
+    <a class="btn" href="{{ url_for('complaint_new') }}">Report an Issue</a>
+
+    <!-- Stats at bottom of hero -->
+    <div class="hero-stats">
+      {% set total_users = total_users | default(0) %}
+      {% set total_complaints = total_complaints | default(0) %}
+      {% set resolution_rate = resolution_rate | default(0) %}
+
+      <div class="stat">
+        <span>{{ "{:,}".format(total_users) }}</span>
+        <p>users and growing</p>
+      </div>
+      <div class="stat">
+        <span>{{ "{:,}".format(total_complaints) }}</span>
+        <p>complaints posted</p>
+      </div>
+      <div class="stat">
+        <span>{{ resolution_rate }}%</span>
+        <p>resolution rate</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Procedure Section ===================== -->
+<section class="procedure">
+    <h2>Fixing Civic Issues is Easy as 1-2-3</h2>
+    <div class="steps-grid">
+        <div class="step-card">
+            <h3>1. Post a Complaint</h3>
+            <p>Post complaints on potholes, unattended garbage, bad roads, and other civic issues in your neighbourhood.</p>
+        </div>
+        <div class="step-card">
+            <h3>2. Take Action from Municipal Department</h3>
+            <p>Municipal authorities review complaints, prioritize, and take necessary action to resolve the issues in your area.</p>
+        </div>
+        <div class="step-card">
+            <h3>3. Get Your Complaint Resolved</h3>
+            <p>Interact with your civic authorities and elected representatives to ensure your complaint is resolved successfully.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== Footer ===================== -->
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <!-- Section 1: CIRS -->
+    <div class="footer-section">
+      <h3>CIRS</h3>
+      <ul>
+        <li><a href="#">Complaints</a></li>
+        <li><a href="#">City Pulse</a></li>
+        <li><a href="#">OpenWorks</a></li>
+      </ul>
+    </div>
+
+    <!-- Section 2: About -->
+    <div class="footer-section">
+      <h3>About</h3>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">User Feedback</a></li>
+        <li><a href="#">In the News</a></li>
+        <li><a href="#">Success Stories</a></li>
+        <li><a href="#">Video</a></li>
+        <li><a href="#">Vision & Mission</a></li>
+      </ul>
+    </div>
+
+    <!-- Section 3: CONNECT -->
+    <div class="footer-section">
+      <h3>CONNECT</h3>
+      <ul>
+        <li><a href="#">Facebook</a></li>
+        <li><a href="#">Twitter</a></li>
+        <li><a href="#">Google+</a></li>
+        <li><a href="#">Pinterest</a></li>
+        <li><a href="#">YouTube</a></li>
+      </ul>
+    </div>
+
+    <!-- Section 4: SUPPORT -->
+    <div class="footer-section">
+      <h3>SUPPORT</h3>
+      <ul>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 CIRS — City Issue Reporting System</p>
+  </div>
+</footer>
+
+</body>
+</html>

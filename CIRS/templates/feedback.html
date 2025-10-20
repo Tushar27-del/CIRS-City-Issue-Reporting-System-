@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Give Feedback</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+
+    .feedback-container {
+      max-width: 700px;
+      margin: 50px auto;
+      padding: 0 15px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 30px 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    .card h2 {
+      color: #007bff;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    form label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      resize: vertical;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0,123,255,0.3);
+    }
+
+    .star-rating {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .star-rating input[type=radio] {
+      display: none;
+    }
+
+    .star-rating label {
+      font-size: 2rem;
+      color: #ccc;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .star-rating input[type=radio]:checked ~ label,
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+      color: #f5c518;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 1rem;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        padding: 20px 15px;
+      }
+      .star-rating label {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="feedback-container">
+    <div class="card">
+      <h2>Feedback for: {{ complaint['title'] }}</h2>
+      <form method="post" action="{{ url_for('feedback', complaint_id=complaint['complaint_id']) }}">
+  <label for="feedback_text">Your Feedback</label>
+  <textarea id="feedback_text" name="feedback_text" rows="6" placeholder="Write your feedback..." required></textarea>
+
+  <!-- Add this rating input -->
+  <label for="rating">Rating (1-5)</label>
+  <select id="rating" name="rating" required>
+    <option value="1">1 ⭐</option>
+    <option value="2">2 ⭐⭐</option>
+    <option value="3">3 ⭐⭐⭐</option>
+    <option value="4">4 ⭐⭐⭐⭐</option>
+    <option value="5">5 ⭐⭐⭐⭐⭐</option>
+  </select>
+
+  <button type="submit" class="btn">Submit Feedback</button>
+</form>
+
+    </div>
+  </div>
+
+</body>
+</html>

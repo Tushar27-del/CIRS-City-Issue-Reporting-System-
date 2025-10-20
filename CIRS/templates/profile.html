@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+<div class="profile-container">
+    <h2>User Profile</h2>
+    <form method="post" enctype="multipart/form-data">
+        <div class="photo-section">
+            {% if user.photo %}
+                <img src="{{ url_for('uploaded_file', filename=user.photo) }}" alt="Profile Photo" id="previewPhoto">
+            {% else %}
+                <img src="{{ url_for('static', filename='images/default_user.png') }}" alt="Profile Photo" id="previewPhoto">
+            {% endif %}
+            <input type="file" name="photo" id="photoInput" accept="image/*">
+        </div>
+
+        <label>Name</label>
+        <input type="text" name="name" value="{{ user.name }}" required>
+
+        <label>Email</label>
+        <input type="email" name="email" value="{{ user.email }}" required>
+
+        <label>Age</label>
+        <input type="number" name="age" value="{{ user.age if user.age else '' }}" placeholder="Enter Age">
+
+        <label>Location (Auto-fill)</label>
+        <div class="location-fields">
+            <input type="text" name="latitude" id="latitude" placeholder="Latitude" value="{{ user.latitude if user.latitude else '' }}" readonly>
+            <input type="text" name="longitude" id="longitude" placeholder="Longitude" value="{{ user.longitude if user.longitude else '' }}" readonly>
+        </div>
+
+        <div id="map"></div>
+
+        <label>Address</label>
+        <input type="text" name="address" id="address" placeholder="Address" value="{{ user.address if user.address else '' }}">
+
+        <div class="btn-group">
+            <button type="button" id="getLocationBtn">📍 Get My Location</button>
+            <button type="submit" class="btn">💾 Update Profile</button>
+        </div>
+    </form>
+</div>
+
+<script>
+// Preview uploaded photo
+document.getElementById('photoInput').addEventListener('change', function(e){
+    let preview = document.getElementById('previewPhoto');
+    if(e.target.files && e.target.files[0]){
+        preview.src = URL.createObjectURL(e.target.files[0]);
+    }
+});
+
+// Leaflet Map
+let map = L.map('map').setView([20.5937,78.9629], 5);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+let marker;
+let latInput = document.getElementById('latitude');
+let lonInput = document.getElementById('longitude');
+
+if(latInput.value && lonInput.value){
+    marker = L.marker([latInput.value, lonInput.value]).addTo(map);
+    map.setView([latInput.value, lonInput.value], 15);
+}
+
+// Get user location
+document.getElementById('getLocationBtn').addEventListener('click', function(){
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(pos){
+            let lat = pos.coords.latitude;
+            let lon = pos.coords.longitude;
+            latInput.value = lat;
+            lonInput.value = lon;
+
+            if(marker) map.removeLayer(marker);
+            marker = L.marker([lat, lon]).addTo(map).bindPopup("📍 You are here").openPopup();
+            map.setView([lat, lon], 15);
+        }, function(err){
+            alert("Unable to get your location: " + err.message);
+        });
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+});
+</script>
+</body>
+</html>

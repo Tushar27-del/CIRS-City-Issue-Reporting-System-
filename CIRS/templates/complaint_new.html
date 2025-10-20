@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report an Issue</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins&display=swap" rel="stylesheet">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <!-- Custom CSS -->
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #222;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 800px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 20px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+    }
+
+    input[type="text"], input[type="file"], input[type="date"], textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .location-fields {
+      display: flex;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .location-fields input {
+      flex: 1;
+    }
+
+    #map {
+      height: 300px;
+      margin-top: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+      color: #fff;
+    }
+
+    .btn-primary { background: #007bff; }
+    .btn-primary:hover { background: #0056b3; }
+
+    .btn-secondary { background: #6c757d; }
+    .btn-secondary:hover { background: #5a6268; }
+
+    .preview-img {
+      display: block;
+      margin-top: 10px;
+      max-width: 250px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Report an Issue</h2>
+    <form method="post" enctype="multipart/form-data" id="complaintForm">
+      <label>Title</label>
+      <input type="text" name="title" placeholder="Enter complaint title" required>
+
+      <label>Description</label>
+      <textarea name="description" rows="4" placeholder="Describe the issue" required></textarea>
+
+      <label>Category / Department</label>
+      <select name="category" required>
+        <option value="">Select Admin Department</option>
+        <option value="General Admin">General Admin</option>
+        <option value="Water Supply">Water Supply</option>
+        <option value="Road Maintenance">Road Maintenance</option>
+        <option value="Street Lights">Street Lights</option>
+        <option value="Garbage & Sanitation">Garbage & Sanitation</option>
+        <option value="Building & Construction">Building & Construction</option>
+        <option value="Public Health">Public Health</option>
+        <option value="Parks & Gardens">Parks & Gardens</option>
+        <option value="Drainage">Drainage</option>
+        <option value="Electricity">Electricity</option>
+        <option value="Environmental">Environmental</option>
+      </select>
+
+      <label>Date</label>
+      <input type="date" name="complaint_date" id="complaint_date" required>
+
+      <label>Upload Photo / Take a Picture</label>
+      <input type="file" name="image" accept="image/*" capture="environment" id="imageInput" required>
+      <img id="preview" class="preview-img" src="#" alt="Preview" style="display:none;">
+
+      <label>Location (Auto-filled)</label>
+      <div class="location-fields">
+        <input type="text" name="latitude" id="latitude" placeholder="Latitude" readonly required>
+        <input type="text" name="longitude" id="longitude" placeholder="Longitude" readonly required>
+      </div>
+
+      <div id="map"></div>
+
+      <input type="text" name="address" id="address" placeholder="Address (optional)">
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-secondary" id="getLocationBtn">📍 Get My Location</button>
+        <button type="submit" class="btn btn-primary">🚀 Submit Complaint</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <!-- Custom JS -->
+  <script>
+    // Auto-fill today's date
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const year = today.getFullYear();
+    document.getElementById('complaint_date').value = `${year}-${month}-${day}`;
+
+    // Initialize map
+    let map = L.map('map').setView([20.5937, 78.9629], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+    let marker;
+
+    // Image preview
+    document.getElementById("imageInput").addEventListener("change", function(e) {
+      let preview = document.getElementById("preview");
+      if (e.target.files && e.target.files[0]) {
+        preview.style.display = "block";
+        preview.src = URL.createObjectURL(e.target.files[0]);
+      }
+    });
+
+    // Get user location
+    document.getElementById("getLocationBtn").addEventListener("click", function() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(pos) {
+          let lat = pos.coords.latitude;
+          let lon = pos.coords.longitude;
+          document.getElementById("latitude").value = lat;
+          document.getElementById("longitude").value = lon;
+
+          if (marker) map.removeLayer(marker);
+          marker = L.marker([lat, lon]).addTo(map).bindPopup("📍 You are here").openPopup();
+          map.setView([lat, lon], 15);
+        }, function(err) {
+          alert("Unable to get your location: " + err.message);
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    });
+
+    // Validation before submit
+    document.getElementById("complaintForm").addEventListener("submit", function(e) {
+      const img = document.getElementById("imageInput").value;
+      const lat = document.getElementById("latitude").value;
+      const lon = document.getElementById("longitude").value;
+      if (!img || !lat || !lon) {
+        e.preventDefault();
+        alert("⚠️ Please upload a photo and get your location before submitting.");
+      }
+    });
+  </script>
+</body>
+</html>

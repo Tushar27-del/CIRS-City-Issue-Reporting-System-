@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Complaint Details</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+  .container {
+    max-width: 700px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  }
+  h2 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .detail-row b {
+    color: #555;
+  }
+  .status {
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #fff;
+  }
+  .status-Pending { background-color: #ff9800; }
+  .status-In-Progress { background-color: #2196f3; }
+  .status-Resolved { background-color: #4caf50; }
+  .img-large {
+    display: block;
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 15px 0;
+    border: 1px solid #ccc;
+  }
+  .btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #007bff;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: background 0.3s;
+  }
+  .btn:hover { background: #0056b3; }
+  .muted {
+    color: #777;
+    font-size: 0.9rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>{{ c['title'] }}</h2>
+
+  <div class="detail-row">
+    <div><b>Date:</b> {{ c['created_at'] }}</div>
+    <div><b>Category/Department:</b> {{ c['department'] }}</div>
+    <div><b>Status:</b> <span class="status status-{{ c['status'].replace(' ','-') }}">{{ c['status'] }}</span></div>
+  </div>
+
+  <p><b>Description:</b> <br>{{ c['description'] }}</p>
+
+  {% if c['image'] %}
+    <img src="{{ url_for('uploaded_file', filename=c['image']) }}" class="img-large" alt="Complaint Photo">
+  {% endif %}
+
+  {% if c['latitude'] and c['longitude'] %}
+    <p>
+      <a href="https://www.google.com/maps?q={{ c['latitude'] }},{{ c['longitude'] }}" target="_blank" class="btn">View Location on Map</a>
+    </p>
+  {% endif %}
+
+  {% if session['role'] == 'citizen' and c['status'] == 'Resolved' %}
+    <p>
+      <a href="{{ url_for('feedback', complaint_id=c['complaint_id']) }}" class="btn">Give Feedback</a>
+    </p>
+  {% endif %}
+</div>
+
+</body>
+</html>
