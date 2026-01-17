@@ -1,7 +1,6 @@
 # City Issue Reporting System (CIRS)
 
 **Author:** Tushar Devanand Ambhore
-
 ![CIRS Banner](https://img.shields.io/badge/Status-Active-brightgreen) ![License](https://img.shields.io/badge/License-MIT-blue)
 
 ## Table of Contents
